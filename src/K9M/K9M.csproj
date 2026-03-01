@@ -1,0 +1,64 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <EnableDefaultItems>False</EnableDefaultItems>
+    <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
+    <RootNamespace>K9M</RootNamespace>
+    <Authors>Theodor Zoulias</Authors>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageId>K9M-Collections</PackageId>
+    <Title>K9M-Collections</Title>
+    <Description>A modern KeyedCollection&lt;TKey, TItem&gt; for .NET 10</Description>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/theodorzoulias/K9M-Collections</RepositoryUrl>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageTags>dictionary;collection;keyedcollection</PackageTags>
+    <PackageIcon>Logo.png</PackageIcon>
+    <AssemblyVersion>1.0.2</AssemblyVersion>
+    <Version>$(AssemblyVersion)</Version>
+    <VersionPrefix>$(AssemblyVersion)</VersionPrefix>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Internal\DualVersion.cs" />
+    <Compile Include="KeyedCollection.Definitions.cs" />
+    <Compile Include="KeyedCollection.Generic.cs" />
+    <Compile Include="KeyedCollection.MutateAll.cs" />
+    <Compile Include="Internal\AltIdentityEqualityComparer.cs" />
+    <Compile Include="NullableReferenceExtensions.cs" />
+    <Compile Include="Internal\CapacityHelper.cs" />
+    <Compile Include="CollectionStringExtensions.cs" />
+    <Compile Include="Internal\KeyExistsBehavior.cs" />
+    <Compile Include="KeyedCollection.Lookup.cs" />
+    <Compile Include="KeyedCollection.Enumerator.cs" />
+    <Compile Include="KeyedCollection.Core.cs" />
+    <Compile Include="KeyedCollection.cs" />
+    <Compile Include="Internal\MathHelper.cs" />
+    <Compile Include="Internal\ThrowHelper.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Package\Logo.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Package\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="Package\Logo.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="Package\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>

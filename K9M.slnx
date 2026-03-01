@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path=".gitignore" />
+    <File Path=".runsettings" />
+    <File Path="LICENSE" />
+    <File Path="Logo.png" />
+    <File Path="README.md" />
+  </Folder>
+  <Project Path="src/K9M/K9M.csproj" />
+  <Project Path="tests/K9M.Tests/K9M.Tests.csproj" Id="0500795a-3bf3-4652-91ee-89875ee72104" />
+</Solution>
