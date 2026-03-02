@@ -281,7 +281,7 @@ The `K9M.KeyedCollection<TKey,TItem>` also does not permit items with `null` key
 
 ## What about performance?
 
-Most operations on the `K9M.KeyedCollection<TKey,TItem>` collection are about 30-40% slower than
+Most operations on the `K9M.KeyedCollection<TKey,TItem>` collection are about 20-30% slower than
 on the `Dictionary<TKey,TValue>`. This is because the `Dictionary<K,V>` is heavily optimized
 for speed, and the `K9M.KeyedCollection<K,I>` is not. This repository places a lot of emphasis on
 features, code maintainability and correctness.
