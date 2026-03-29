@@ -1,7 +1,7 @@
 using System;
 using System.Diagnostics;
 
-namespace K9M.Internal;
+namespace K9M;
 
 internal static class MathHelper
 {

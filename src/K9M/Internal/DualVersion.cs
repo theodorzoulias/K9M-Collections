@@ -1,4 +1,4 @@
-﻿namespace K9M.Internal;
+﻿namespace K9M;
 
 /// <summary>
 /// The internal version of the collection, that invalidates enumerators

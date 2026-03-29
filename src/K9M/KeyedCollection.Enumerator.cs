@@ -1,6 +1,4 @@
 ﻿using System.Runtime.CompilerServices;
-using K9M.Internal;
-
 namespace K9M;
 
 // Enumerator implementation.

@@ -1,4 +1,4 @@
-﻿namespace K9M.Internal;
+﻿namespace K9M;
 
 /// <summary>
 /// Specifies what to do when an attempt is made to add a key

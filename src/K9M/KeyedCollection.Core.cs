@@ -1,5 +1,4 @@
-﻿using K9M.Internal;
-using K9M.NullRef;
+﻿using K9M.NullRef;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -353,6 +352,25 @@ public partial class KeyedCollection<TKey, TItem>
         ushort version = 0;
         while (TryMoveNext(ref index, ref version))
             yield return _entries[index].Item;
+    }
+
+    internal IEnumerable<TKey> EnumerateKeys()
+    {
+        int index = -1;
+        ushort version = 0;
+        while (TryMoveNext(ref index, ref version))
+            yield return _keySelector(_entries[index].Item);
+    }
+
+    internal IEnumerator<KeyValuePair<TKey, TItem>> EnumerateKeyValuePairs()
+    {
+        int index = -1;
+        ushort version = 0;
+        while (TryMoveNext(ref index, ref version))
+        {
+            ref TItem item = ref _entries[index].Item;
+            yield return KeyValuePair.Create(_keySelector(item), item);
+        }
     }
 
     /// <summary>

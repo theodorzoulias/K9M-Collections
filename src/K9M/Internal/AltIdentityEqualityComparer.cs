@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
-namespace K9M.Internal;
+namespace K9M;
 
 /// <summary>
 /// A comparer that implements the IAlternateEqualityComparer&lt;T1,T2&gt; interface, where the two
@@ -11,11 +12,11 @@ namespace K9M.Internal;
 /// the constructor of the collection. This comparer makes it possible to share implementations
 /// between the main collection and the AlternateLookup.
 /// </summary>
-internal class AltIdentityEqualityComparer<TKey> : IAlternateEqualityComparer<TKey, TKey>
+internal class AltIdentityEqualityComparer<TKey> : IAlternateEqualityComparer<TKey, TKey> where TKey : notnull
 {
     public static AltIdentityEqualityComparer<TKey> Default = new(EqualityComparer<TKey>.Default);
 
-    public static IAlternateEqualityComparer<TKey, TKey> GetSelfOrCachedOrNew(IEqualityComparer<TKey> comparer)
+    public static IAlternateEqualityComparer<TKey, TKey> GetSelfOrCachedOrNew(IEqualityComparer<TKey>? comparer)
     {
         if (comparer is null || ReferenceEquals(comparer, EqualityComparer<TKey>.Default))
             return AltIdentityEqualityComparer<TKey>.Default;
@@ -23,7 +24,7 @@ internal class AltIdentityEqualityComparer<TKey> : IAlternateEqualityComparer<TK
         {
             IEqualityComparer<string> stringComparer = Unsafe
                 .As<IEqualityComparer<string>>(comparer);
-            AltIdentityEqualityComparer<string> altIdentity = GetCachedAltIdentityStringComparer(stringComparer);
+            AltIdentityEqualityComparer<string>? altIdentity = GetCachedAltIdentityStringComparer(stringComparer);
             if (altIdentity is not null)
                 return Unsafe.As<AltIdentityEqualityComparer<TKey>>(altIdentity);
         }
@@ -36,7 +37,7 @@ internal class AltIdentityEqualityComparer<TKey> : IAlternateEqualityComparer<TK
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static AltIdentityEqualityComparer<string> GetCachedAltIdentityStringComparer(
+    private static AltIdentityEqualityComparer<string>? GetCachedAltIdentityStringComparer(
         IEqualityComparer<string> comparer)
     {
         Debug.Assert(comparer is not null);
@@ -79,7 +80,7 @@ internal class AltIdentityEqualityComparer<TKey> : IAlternateEqualityComparer<TK
     public TKey Create(TKey key) => key;
 
     public bool TryGetAlternateEqualityComparer<TAlternate>(
-        out IAlternateEqualityComparer<TAlternate, TKey> result)
+        [MaybeNullWhen(false)] out IAlternateEqualityComparer<TAlternate, TKey> result)
         where TAlternate : allows ref struct
     {
         if (_parent is IAlternateEqualityComparer<TAlternate, TKey> alternate)

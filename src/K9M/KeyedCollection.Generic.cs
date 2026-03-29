@@ -1,5 +1,4 @@
-﻿using K9M.Internal;
-using K9M.NullRef;
+﻿using K9M.NullRef;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;

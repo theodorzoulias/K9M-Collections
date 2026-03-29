@@ -35,7 +35,7 @@ public partial class KeyedCollection<TKey, TItem> : ICollection<TItem> where TKe
     /// <param name="comparer">The equality comparer that is used to determine equality
     /// of keys for the collection, and to provide hash values for the keys.</param>
     /// <exception cref="ArgumentNullException">The keySelector is null.</exception>
-    public partial KeyedCollection(Func<TItem, TKey> keySelector, IEqualityComparer<TKey> comparer);
+    public partial KeyedCollection(Func<TItem, TKey> keySelector, IEqualityComparer<TKey>? comparer);
 
     /// <summary>
     /// Initializes a new instance of the collection that is empty, has the specified initial
@@ -57,7 +57,7 @@ public partial class KeyedCollection<TKey, TItem> : ICollection<TItem> where TKe
     /// of keys for the collection, and to provide hash values for the keys.</param>
     /// <exception cref="ArgumentNullException">The keySelector is null.</exception>
     /// <exception cref="ArgumentOutOfRangeException">The capacity is negative.</exception>
-    public partial KeyedCollection(Func<TItem, TKey> keySelector, int capacity, IEqualityComparer<TKey> comparer);
+    public partial KeyedCollection(Func<TItem, TKey> keySelector, int capacity, IEqualityComparer<TKey>? comparer);
 
     /// <summary>
     /// Initializes a new instance of the collection that contains items copied from
@@ -81,7 +81,7 @@ public partial class KeyedCollection<TKey, TItem> : ICollection<TItem> where TKe
     /// of keys for the collection, and to provide hash values for the keys.</param>
     /// <exception cref="ArgumentNullException">The keySelector or the enumerable sequence is null.</exception>
     /// <exception cref="ArgumentException">The enumerable sequence contains one or more items with duplicated keys.</exception>
-    public partial KeyedCollection(Func<TItem, TKey> keySelector, IEnumerable<TItem> items, IEqualityComparer<TKey> comparer);
+    public partial KeyedCollection(Func<TItem, TKey> keySelector, IEnumerable<TItem> items, IEqualityComparer<TKey>? comparer);
 
     /// <summary>Gets the number of items contained in the collection.</summary>
     /// <returns>The number of items in the collection.</returns>
@@ -151,7 +151,7 @@ public partial class KeyedCollection<TKey, TItem> : ICollection<TItem> where TKe
     /// that is also equal according to the specified equality comparer. Otherwise false.
     /// </returns>
     /// <exception cref="ArgumentNullException">The item is null, or has a null key.</exception>
-    public partial bool ContainsItem(TItem item, IEqualityComparer<TItem> comparer);
+    public partial bool ContainsItem(TItem item, IEqualityComparer<TItem>? comparer);
 
     /// <summary>Gets the item with the specified key.</summary>
     /// <param name="key">The key of the item to get.</param>
@@ -626,6 +626,12 @@ public partial class KeyedCollection<TKey, TItem> : ICollection<TItem> where TKe
     public partial TItem[] ToArray();
 
     /// <summary>
+    /// Returns a read-only IReadOnlyDictionary wrapper for the collection.
+    /// </summary>
+    /// <returns>An object that acts as a read-only wrapper around the collection.</returns>
+    public partial IReadOnlyDictionary<TKey, TItem> AsReadOnlyDictionary();
+
+    /// <summary>
     /// Returns an enumerator that iterates through the collection,
     /// yielding the references of the items inside the collection.
     /// </summary>
@@ -642,7 +648,7 @@ public partial class KeyedCollection<TKey, TItem> : ICollection<TItem> where TKe
     /// that should not be used if the method returns false.
     /// </param>
     /// <returns>true if a lookup could be created, otherwise false.</returns>
-    public partial bool TryGetAlternateLookup<TAlternateKey>(out AlternateLookup<TAlternateKey> lookup) where TAlternateKey : allows ref struct;
+    public partial bool TryGetAlternateLookup<TAlternateKey>(out AlternateLookup<TAlternateKey> lookup) where TAlternateKey : notnull, allows ref struct;
 
     /// <summary>
     /// Gets an instance of a type that can be used to perform operations on the
@@ -651,7 +657,7 @@ public partial class KeyedCollection<TKey, TItem> : ICollection<TItem> where TKe
     /// <typeparam name="TAlternateKey">The alternate type of a key for performing lookups.</typeparam>
     /// <returns>The created lookup instance.</returns>
     /// <exception cref="InvalidOperationException">The collections's comparer is not compatible with TAlternateKey.</exception>
-    public partial AlternateLookup<TAlternateKey> GetAlternateLookup<TAlternateKey>() where TAlternateKey : allows ref struct;
+    public partial AlternateLookup<TAlternateKey> GetAlternateLookup<TAlternateKey>() where TAlternateKey : notnull, allows ref struct;
 
     /// <summary>
     /// Replaces all the items in the collection,

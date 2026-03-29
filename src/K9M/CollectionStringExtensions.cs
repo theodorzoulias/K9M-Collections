@@ -19,6 +19,7 @@ public static class CollectionStringExtensions
     /// <param name="key">The alternate key to locate in the collection.</param>
     /// <returns>true if the collection contains an item with the specified alternate key, otherwise false.</returns>
     public static bool ContainsKey<TItem>(this KeyedCollection<string, TItem> source, ReadOnlySpan<char> key)
+        where TItem : notnull
     {
         ArgumentNullException.ThrowIfNull(source);
         return source.GetAlternateLookup<ReadOnlySpan<char>>().ContainsKey(key);
@@ -34,6 +35,7 @@ public static class CollectionStringExtensions
     /// This extension method corresponds to the indexer of the AlternateLookup type. Extension indexers <a href="https://github.com/dotnet/roslyn/issues/80312">didn't make it</a> for C# 14.
     /// </remarks>
     public static ref TItem GetItem<TItem>(this KeyedCollection<string, TItem> source, ReadOnlySpan<char> key)
+        where TItem : notnull
     {
         ArgumentNullException.ThrowIfNull(source);
         return ref source.GetAlternateLookup<ReadOnlySpan<char>>()[key];
@@ -48,7 +50,8 @@ public static class CollectionStringExtensions
     /// Otherwise returns the default value for the type.
     /// </param>
     /// <returns>true if the collection contains an item with the specified alternate key, otherwise false.</returns>
-    public static bool TryGetItem<TItem>(this KeyedCollection<string, TItem> source, ReadOnlySpan<char> key, out TItem item)
+    public static bool TryGetItem<TItem>(this KeyedCollection<string, TItem> source, ReadOnlySpan<char> key, [MaybeNullWhen(false)] out TItem item)
+        where TItem : notnull
     {
         ArgumentNullException.ThrowIfNull(source);
         return source.GetAlternateLookup<ReadOnlySpan<char>>().TryGetItem(key, out item);
@@ -63,6 +66,7 @@ public static class CollectionStringExtensions
     /// <param name="key">The alternate key of the item to get.</param>
     /// <returns>Either a reference to the item with the specified alternate key, or a null managed pointer if the alternate key is not found.</returns>
     public static ref TItem GetItemRef<TItem>(this KeyedCollection<string, TItem> source, ReadOnlySpan<char> key)
+        where TItem : notnull
     {
         ArgumentNullException.ThrowIfNull(source);
         return ref source.GetAlternateLookup<ReadOnlySpan<char>>().GetItemRef(key);
@@ -78,6 +82,7 @@ public static class CollectionStringExtensions
     /// <param name="exists">Returns true if an item with the specified alternate key was found in the collection, otherwise false.</param>
     /// <returns>Either a reference to the item with the specified alternate key, or a null managed pointer if the alternate key is not found.</returns>
     public static ref TItem GetItemRef<TItem>(this KeyedCollection<string, TItem> source, ReadOnlySpan<char> key, out bool exists)
+        where TItem : notnull
     {
         ArgumentNullException.ThrowIfNull(source);
         return ref source.GetAlternateLookup<ReadOnlySpan<char>>().GetItemRef(key, out exists);
@@ -101,6 +106,7 @@ public static class CollectionStringExtensions
     /// or the factory delegate produced an item with different alternate key than the original.
     /// </exception>
     public static ref TItem GetOrAdd<TItem>(this KeyedCollection<string, TItem> source, ReadOnlySpan<char> key, Func<ReadOnlySpan<char>, TItem> itemFactory)
+        where TItem : notnull
     {
         ArgumentNullException.ThrowIfNull(source);
         return ref source.GetAlternateLookup<ReadOnlySpan<char>>().GetOrAdd(key, itemFactory);
@@ -124,6 +130,7 @@ public static class CollectionStringExtensions
     /// or the factory delegate produced an item with different alternate key than the original.
     /// </exception>
     public static ref TItem GetOrAdd<TItem>(this KeyedCollection<string, TItem> source, ReadOnlySpan<char> key, Func<ReadOnlySpan<char>, TItem> itemFactory, out bool added)
+        where TItem : notnull
     {
         ArgumentNullException.ThrowIfNull(source);
         return ref source.GetAlternateLookup<ReadOnlySpan<char>>().GetOrAdd(key, itemFactory, out added);
@@ -148,6 +155,7 @@ public static class CollectionStringExtensions
     /// or the factory delegate produced an item with different alternate key than the original.
     /// </exception>
     public static ref TItem GetOrAdd<TItem, TArg>(this KeyedCollection<string, TItem> source, ReadOnlySpan<char> key, Func<ReadOnlySpan<char>, TArg, TItem> itemFactory, TArg factoryArgument)
+        where TItem : notnull
     {
         ArgumentNullException.ThrowIfNull(source);
         return ref source.GetAlternateLookup<ReadOnlySpan<char>>().GetOrAdd(key, itemFactory, factoryArgument);
@@ -173,6 +181,7 @@ public static class CollectionStringExtensions
     /// or the factory delegate produced an item with different alternate key than the original.
     /// </exception>
     public static ref TItem GetOrAdd<TItem, TArg>(this KeyedCollection<string, TItem> source, ReadOnlySpan<char> key, Func<ReadOnlySpan<char>, TArg, TItem> itemFactory, TArg factoryArgument, out bool added)
+        where TItem : notnull
     {
         ArgumentNullException.ThrowIfNull(source);
         return ref source.GetAlternateLookup<ReadOnlySpan<char>>().GetOrAdd(key, itemFactory, factoryArgument, out added);
@@ -196,6 +205,7 @@ public static class CollectionStringExtensions
     /// or a factory delegate produced an item with different alternate key than the original.
     /// </exception>
     public static ref TItem AddOrReplace<TItem>(this KeyedCollection<string, TItem> source, ReadOnlySpan<char> key, Func<ReadOnlySpan<char>, TItem> addItemFactory, Func<ReadOnlySpan<char>, TItem, TItem> replaceItemFactory)
+        where TItem : notnull
     {
         ArgumentNullException.ThrowIfNull(source);
         return ref source.GetAlternateLookup<ReadOnlySpan<char>>().AddOrReplace(key, addItemFactory, replaceItemFactory);
@@ -220,6 +230,7 @@ public static class CollectionStringExtensions
     /// or a factory delegate produced an item with different alternate key than the original.
     /// </exception>
     public static ref TItem AddOrReplace<TItem>(this KeyedCollection<string, TItem> source, ReadOnlySpan<char> key, Func<ReadOnlySpan<char>, TItem> addItemFactory, Func<ReadOnlySpan<char>, TItem, TItem> replaceItemFactory, out bool replaced)
+        where TItem : notnull
     {
         ArgumentNullException.ThrowIfNull(source);
         return ref source.GetAlternateLookup<ReadOnlySpan<char>>().AddOrReplace(key, addItemFactory, replaceItemFactory, out replaced);
@@ -248,6 +259,7 @@ public static class CollectionStringExtensions
     /// or a factory delegate produced an item with different alternate key than the original.
     /// </exception>
     public static ref TItem AddOrReplace<TItem>(this KeyedCollection<string, TItem> source, ReadOnlySpan<char> key, Func<ReadOnlySpan<char>, TItem> addItemFactory, Func<ReadOnlySpan<char>, TItem, TItem> replaceItemFactory, out bool replaced, out TItem originalItem)
+        where TItem : notnull
     {
         ArgumentNullException.ThrowIfNull(source);
         return ref source.GetAlternateLookup<ReadOnlySpan<char>>().AddOrReplace(key, addItemFactory, replaceItemFactory, out replaced, out originalItem);
@@ -273,6 +285,7 @@ public static class CollectionStringExtensions
     /// or a factory delegate produced an item with different alternate key than the original.
     /// </exception>
     public static ref TItem AddOrReplace<TItem, TArg>(this KeyedCollection<string, TItem> source, ReadOnlySpan<char> key, Func<ReadOnlySpan<char>, TArg, TItem> addItemFactory, Func<ReadOnlySpan<char>, TItem, TArg, TItem> replaceItemFactory, TArg factoryArgument)
+        where TItem : notnull
     {
         ArgumentNullException.ThrowIfNull(source);
         return ref source.GetAlternateLookup<ReadOnlySpan<char>>().AddOrReplace(key, addItemFactory, replaceItemFactory, factoryArgument);
@@ -299,6 +312,7 @@ public static class CollectionStringExtensions
     /// or a factory delegate produced an item with different alternate key than the original.
     /// </exception>
     public static ref TItem AddOrReplace<TItem, TArg>(this KeyedCollection<string, TItem> source, ReadOnlySpan<char> key, Func<ReadOnlySpan<char>, TArg, TItem> addItemFactory, Func<ReadOnlySpan<char>, TItem, TArg, TItem> replaceItemFactory, TArg factoryArgument, out bool replaced)
+        where TItem : notnull
     {
         ArgumentNullException.ThrowIfNull(source);
         return ref source.GetAlternateLookup<ReadOnlySpan<char>>().AddOrReplace(key, addItemFactory, replaceItemFactory, factoryArgument, out replaced);
@@ -329,6 +343,7 @@ public static class CollectionStringExtensions
     /// or a factory delegate produced an item with different alternate key than the original.
     /// </exception>
     public static ref TItem AddOrReplace<TItem, TArg>(this KeyedCollection<string, TItem> source, ReadOnlySpan<char> key, Func<ReadOnlySpan<char>, TArg, TItem> addItemFactory, Func<ReadOnlySpan<char>, TItem, TArg, TItem> replaceItemFactory, TArg factoryArgument, out bool replaced, out TItem originalItem)
+        where TItem : notnull
     {
         ArgumentNullException.ThrowIfNull(source);
         return ref source.GetAlternateLookup<ReadOnlySpan<char>>().AddOrReplace(key, addItemFactory, replaceItemFactory, factoryArgument, out replaced, out originalItem);
@@ -350,6 +365,7 @@ public static class CollectionStringExtensions
     /// or the factory delegate produced an item with different alternate key than the original.
     /// </exception>
     public static bool TryReplace<TItem>(this KeyedCollection<string, TItem> source, ReadOnlySpan<char> key, Func<ReadOnlySpan<char>, TItem, TItem> replaceItemFactory)
+        where TItem : notnull
     {
         ArgumentNullException.ThrowIfNull(source);
         return source.GetAlternateLookup<ReadOnlySpan<char>>().TryReplace(key, replaceItemFactory);
@@ -372,6 +388,7 @@ public static class CollectionStringExtensions
     /// or the factory delegate produced an item with different alternate key than the original.
     /// </exception>
     public static ref TItem TryReplace<TItem>(this KeyedCollection<string, TItem> source, ReadOnlySpan<char> key, Func<ReadOnlySpan<char>, TItem, TItem> replaceItemFactory, out bool replaced)
+        where TItem : notnull
     {
         ArgumentNullException.ThrowIfNull(source);
         return ref source.GetAlternateLookup<ReadOnlySpan<char>>().TryReplace(key, replaceItemFactory, out replaced);
@@ -395,6 +412,7 @@ public static class CollectionStringExtensions
     /// or the factory delegate produced an item with different alternate key than the original.
     /// </exception>
     public static ref TItem TryReplace<TItem>(this KeyedCollection<string, TItem> source, ReadOnlySpan<char> key, Func<ReadOnlySpan<char>, TItem, TItem> replaceItemFactory, out bool replaced, out TItem originalItem)
+        where TItem : notnull
     {
         ArgumentNullException.ThrowIfNull(source);
         return ref source.GetAlternateLookup<ReadOnlySpan<char>>().TryReplace(key, replaceItemFactory, out replaced, out originalItem);
@@ -418,6 +436,7 @@ public static class CollectionStringExtensions
     /// or the factory delegate produced an item with different alternate key than the original.
     /// </exception>
     public static bool TryReplace<TItem, TArg>(this KeyedCollection<string, TItem> source, ReadOnlySpan<char> key, Func<ReadOnlySpan<char>, TItem, TArg, TItem> replaceItemFactory, TArg factoryArgument)
+        where TItem : notnull
     {
         ArgumentNullException.ThrowIfNull(source);
         return source.GetAlternateLookup<ReadOnlySpan<char>>().TryReplace(key, replaceItemFactory, factoryArgument);
@@ -442,6 +461,7 @@ public static class CollectionStringExtensions
     /// or the factory delegate produced an item with different alternate key than the original.
     /// </exception>
     public static ref TItem TryReplace<TItem, TArg>(this KeyedCollection<string, TItem> source, ReadOnlySpan<char> key, Func<ReadOnlySpan<char>, TItem, TArg, TItem> replaceItemFactory, TArg factoryArgument, out bool replaced)
+        where TItem : notnull
     {
         ArgumentNullException.ThrowIfNull(source);
         return ref source.GetAlternateLookup<ReadOnlySpan<char>>().TryReplace(key, replaceItemFactory, factoryArgument, out replaced);
@@ -467,6 +487,7 @@ public static class CollectionStringExtensions
     /// or the factory delegate produced an item with different alternate key than the original.
     /// </exception>
     public static ref TItem TryReplace<TItem, TArg>(this KeyedCollection<string, TItem> source, ReadOnlySpan<char> key, Func<ReadOnlySpan<char>, TItem, TArg, TItem> replaceItemFactory, TArg factoryArgument, out bool replaced, out TItem originalItem)
+        where TItem : notnull
     {
         ArgumentNullException.ThrowIfNull(source);
         return ref source.GetAlternateLookup<ReadOnlySpan<char>>().TryReplace(key, replaceItemFactory, factoryArgument, out replaced, out originalItem);
@@ -480,6 +501,7 @@ public static class CollectionStringExtensions
     /// <param name="key">The alternate key of the item to remove.</param>
     /// <returns>true if the item is found and removed, otherwise false.</returns>
     public static bool TryRemove<TItem>(this KeyedCollection<string, TItem> source, ReadOnlySpan<char> key)
+        where TItem : notnull
     {
         ArgumentNullException.ThrowIfNull(source);
         return source.GetAlternateLookup<ReadOnlySpan<char>>().TryRemove(key);
@@ -493,7 +515,8 @@ public static class CollectionStringExtensions
     /// <param name="key">The alternate key of the item to remove.</param>
     /// <param name="removedItem">Returns the removed item if found, otherwise returns the default value for the type.</param>
     /// <returns>true if the item is found and removed, otherwise false.</returns>
-    public static bool TryRemove<TItem>(this KeyedCollection<string, TItem> source, ReadOnlySpan<char> key, out TItem removedItem)
+    public static bool TryRemove<TItem>(this KeyedCollection<string, TItem> source, ReadOnlySpan<char> key, [MaybeNullWhen(false)] out TItem removedItem)
+        where TItem : notnull
     {
         ArgumentNullException.ThrowIfNull(source);
         return source.GetAlternateLookup<ReadOnlySpan<char>>().TryRemove(key, out removedItem);

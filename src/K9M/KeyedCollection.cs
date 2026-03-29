@@ -1,5 +1,4 @@
-﻿using K9M.Internal;
-using K9M.NullRef;
+﻿using K9M.NullRef;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,11 +8,12 @@ using System.Runtime.CompilerServices;
 
 namespace K9M;
 
-public partial class KeyedCollection<TKey, TItem> : ICollection<TItem> where TKey : notnull where TItem : notnull
+public partial class KeyedCollection<TKey, TItem> : ICollection<TItem>
+    where TKey : notnull where TItem : notnull
 {
     public partial KeyedCollection(Func<TItem, TKey> keySelector) : this(keySelector, comparer: null) { }
 
-    public partial KeyedCollection(Func<TItem, TKey> keySelector, IEqualityComparer<TKey> comparer)
+    public partial KeyedCollection(Func<TItem, TKey> keySelector, IEqualityComparer<TKey>? comparer)
     {
         ArgumentNullException.ThrowIfNull(keySelector);
         _keySelector = keySelector;
@@ -24,13 +24,13 @@ public partial class KeyedCollection<TKey, TItem> : ICollection<TItem> where TKe
     public partial KeyedCollection(Func<TItem, TKey> keySelector, int capacity) : this(keySelector)
         => EnsureCapacity(capacity);
 
-    public partial KeyedCollection(Func<TItem, TKey> keySelector, int capacity, IEqualityComparer<TKey> comparer) : this(keySelector, comparer)
+    public partial KeyedCollection(Func<TItem, TKey> keySelector, int capacity, IEqualityComparer<TKey>? comparer) : this(keySelector, comparer)
         => EnsureCapacity(capacity);
 
     public partial KeyedCollection(Func<TItem, TKey> keySelector, IEnumerable<TItem> items) : this(keySelector)
         => AddRangeEnumerable(items, KeyExistsBehavior.Throw);
 
-    public partial KeyedCollection(Func<TItem, TKey> keySelector, IEnumerable<TItem> items, IEqualityComparer<TKey> comparer) : this(keySelector, comparer)
+    public partial KeyedCollection(Func<TItem, TKey> keySelector, IEnumerable<TItem> items, IEqualityComparer<TKey>? comparer) : this(keySelector, comparer)
         => AddRangeEnumerable(items, KeyExistsBehavior.Throw);
 
     public partial int Count => _dataCount;
@@ -60,7 +60,7 @@ public partial class KeyedCollection<TKey, TItem> : ICollection<TItem> where TKe
 
     public partial bool ContainsItem(TItem item) => ContainsItem(item, default);
 
-    public partial bool ContainsItem(TItem item, IEqualityComparer<TItem> comparer)
+    public partial bool ContainsItem(TItem item, IEqualityComparer<TItem>? comparer)
     {
         ref Entry entry = ref FindEntry(ExtractKey(item), out _, out _, out _, out _);
         if (entry.IsNull) return false;
@@ -129,7 +129,7 @@ public partial class KeyedCollection<TKey, TItem> : ICollection<TItem> where TKe
             return ref _entries[entryIndex].Item;
         }
         AddNewInternal(hashCode, item, bucketIndex, out entryIndex);
-        replaced = false; originalItem = default;
+        replaced = false; originalItem = default!;
         return ref _entries[entryIndex].Item;
     }
 
@@ -165,7 +165,7 @@ public partial class KeyedCollection<TKey, TItem> : ICollection<TItem> where TKe
     public partial ref TItem TryReplace(TItem item, out bool replaced, out TItem originalItem)
     {
         ref Entry entry = ref FindEntry(ExtractKey(item), out _, out _, out _, out _);
-        if (entry.IsNull) { replaced = false; originalItem = default; return ref Unsafe.NullRef<TItem>(); }
+        if (entry.IsNull) { replaced = false; originalItem = default!; return ref Unsafe.NullRef<TItem>(); }
         originalItem = entry.Item;
         entry.Item = item;
         replaced = true;
@@ -246,7 +246,10 @@ public partial class KeyedCollection<TKey, TItem> : ICollection<TItem> where TKe
         return array;
     }
 
+    public partial IReadOnlyDictionary<TKey, TItem> AsReadOnlyDictionary() => new ReadOnlyKeyedCollection<TKey, TItem>(this);
+
     bool ICollection<TItem>.IsReadOnly => false;
+
     bool ICollection<TItem>.Contains(TItem item) => ContainsItem(item);
     void ICollection<TItem>.CopyTo(TItem[] array, int arrayIndex) => CopyTo(array, arrayIndex);
     void ICollection<TItem>.Add(TItem item) => Add(item);
@@ -256,7 +259,7 @@ public partial class KeyedCollection<TKey, TItem> : ICollection<TItem> where TKe
     IEnumerator<TItem> IEnumerable<TItem>.GetEnumerator() => EnumerateItems();
     IEnumerator IEnumerable.GetEnumerator() => EnumerateItems();
 
-    public partial bool TryGetAlternateLookup<TAlternateKey>(out AlternateLookup<TAlternateKey> lookup) where TAlternateKey : allows ref struct
+    public partial bool TryGetAlternateLookup<TAlternateKey>(out AlternateLookup<TAlternateKey> lookup) where TAlternateKey : notnull, allows ref struct
     {
         if (_keyComparer is IAlternateEqualityComparer<TAlternateKey, TKey> selfAlternate)
         {
@@ -265,7 +268,7 @@ public partial class KeyedCollection<TKey, TItem> : ICollection<TItem> where TKe
         }
         if (_keyComparer is AltIdentityEqualityComparer<TKey> alt)
         {
-            if (alt.TryGetAlternateEqualityComparer(out IAlternateEqualityComparer<TAlternateKey, TKey> alternateKeyComparer))
+            if (alt.TryGetAlternateEqualityComparer(out IAlternateEqualityComparer<TAlternateKey, TKey>? alternateKeyComparer))
             {
                 lookup = new AlternateLookup<TAlternateKey>(this, alternateKeyComparer);
                 return true;
@@ -275,7 +278,7 @@ public partial class KeyedCollection<TKey, TItem> : ICollection<TItem> where TKe
         return false;
     }
 
-    public partial AlternateLookup<TAlternateKey> GetAlternateLookup<TAlternateKey>() where TAlternateKey : allows ref struct
+    public partial AlternateLookup<TAlternateKey> GetAlternateLookup<TAlternateKey>() where TAlternateKey : notnull, allows ref struct
     {
         if (!TryGetAlternateLookup<TAlternateKey>(out var alternateLookup))
         {

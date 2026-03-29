@@ -1,5 +1,4 @@
-﻿using K9M.Internal;
-using System;
+﻿using System;
 using System.Diagnostics;
 
 namespace K9M;

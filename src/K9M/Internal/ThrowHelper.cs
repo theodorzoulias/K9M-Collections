@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
-namespace K9M.Internal;
+namespace K9M;
 
 internal static class ThrowHelper
 {

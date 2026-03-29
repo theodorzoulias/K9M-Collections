@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 
-namespace K9M.Internal;
+namespace K9M;
 
 internal static class CapacityHelper
 {

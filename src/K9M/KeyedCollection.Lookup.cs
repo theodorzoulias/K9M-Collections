@@ -30,6 +30,16 @@ public partial class KeyedCollection<TKey, TItem>
         public KeyedCollection<TKey, TItem> Parent => _parent;
 
         /// <summary>
+        /// Gets the alternate equality comparer that is used to determine equality of
+        /// alternate keys for the collection.
+        /// </summary>
+        /// <returns>
+        /// The alternate equality comparer that is used to determine equality of
+        /// alternate keys for the collection, and to provide hash values for the keys.
+        /// </returns>
+        public IAlternateEqualityComparer<TAlternateKey, TKey> KeyComparer => _keyComparer;
+
+        /// <summary>
         /// Determines whether the collection contains an item with the specified alternate key.
         /// </summary>
         /// <param name="key">The alternate key to locate in the collection.</param>
