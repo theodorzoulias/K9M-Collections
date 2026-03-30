@@ -35,7 +35,7 @@ public partial class KeyedCollection<TKey, TItem>
         /// </summary>
         /// <returns>
         /// The alternate equality comparer that is used to determine equality of
-        /// alternate keys for the collection, and to provide hash values for the keys.
+        /// alternate keys for the collection, and to provide hash values for the alternate keys.
         /// </returns>
         public IAlternateEqualityComparer<TAlternateKey, TKey> KeyComparer => _keyComparer;
 
