@@ -11,13 +11,13 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageId>K9M-Collections</PackageId>
     <Title>K9M-Collections</Title>
-    <Description>A modern KeyedCollection&lt;TKey, TItem&gt; for .NET 10</Description>
+    <Description>A modern KeyedCollection&lt;TKey, TItem&gt; for .NET 10, and a ValueList&lt;T&gt;.</Description>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/theodorzoulias/K9M-Collections</RepositoryUrl>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageTags>dictionary;collection;keyedcollection</PackageTags>
     <PackageIcon>Logo.png</PackageIcon>
-    <AssemblyVersion>1.2.4</AssemblyVersion>
+    <AssemblyVersion>1.2.5</AssemblyVersion>
     <Version>$(AssemblyVersion)</Version>
     <VersionPrefix>$(AssemblyVersion)</VersionPrefix>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
