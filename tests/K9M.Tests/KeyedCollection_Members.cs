@@ -741,25 +741,21 @@ public class KeyedCollection_Members
     public void Clear()
     {
         PrintTitle();
-        {
-            StringKC collection = CreateCollection3();
-            collection.Clear();
-            Assert.AreEqual(collection.Count, 0);
-            Assert.AreEqual(collection.Count(), collection.Count);
-        }
+        StringKC collection = CreateCollection3();
+        collection.Clear();
+        Assert.AreEqual(collection.Count, 0);
+        Assert.AreEqual(collection.Count(), collection.Count);
     }
 
     [TestMethod]
     public void EnsureCapacity()
     {
         PrintTitle();
-        {
-            StringKC collection = CreateCollection3();
-            collection.EnsureCapacity(10);
-            Assert.AreEqual(collection.Capacity, 10);
-            Assert.AreEqual(collection.Count, 3);
-            Assert.AreEqual(collection.Count(), collection.Count);
-        }
+        StringKC collection = CreateCollection3();
+        collection.EnsureCapacity(10);
+        Assert.AreEqual(collection.Capacity, 10);
+        Assert.AreEqual(collection.Count, 3);
+        Assert.AreEqual(collection.Count(), collection.Count);
     }
 
     [TestMethod]
@@ -787,12 +783,10 @@ public class KeyedCollection_Members
     public void ToArray()
     {
         PrintTitle();
-        {
-            StringKC collection = CreateCollection3();
-            Item[] array = collection.ToArray();
-            Assert.AreEqual(array.Length, 3);
-            Assert.IsTrue(collection.SequenceEqual(array));
-        }
+        StringKC collection = CreateCollection3();
+        Item[] array = collection.ToArray();
+        Assert.AreEqual(array.Length, 3);
+        Assert.IsTrue(collection.SequenceEqual(array));
     }
 
     [TestMethod]

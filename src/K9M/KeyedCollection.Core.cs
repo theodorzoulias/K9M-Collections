@@ -68,8 +68,8 @@ public partial class KeyedCollection<TKey, TItem>
     [MemberNotNull(nameof(_entries), nameof(_buckets))]
     private void InitializeToZeroCapacity()
     {
-        _entries = Array.Empty<Entry>();
-        _buckets = Array.Empty<int>();
+        _entries = [];
+        _buckets = [];
         _reservedLength = 0;
         _dataCount = 0;
         _freeList = EndOfChain;
@@ -181,7 +181,7 @@ public partial class KeyedCollection<TKey, TItem>
             _entries[previousEntryIndex].Next = entry.Next;
 
         entry.HashCode = default;
-        entry.Item = default;
+        entry.Item = default!;
         entry.Next = -_freeList - 1; // Free list: value in Next is negative 1-based.
         _freeList = entryIndex;
         _dataCount--;
@@ -230,7 +230,6 @@ public partial class KeyedCollection<TKey, TItem>
 
     private const int DefaultCapacity = 4;
     private const double MinimumGrowth = 1.15;
-    private enum GrowStrategy { MinimalSpace, PowerOfTwo }
 
     /// <summary>Expand the capacity to at least the given number.</summary>
     private void Grow(int minimumCapacity, GrowStrategy growStrategy)
@@ -238,7 +237,7 @@ public partial class KeyedCollection<TKey, TItem>
         Debug.Assert(minimumCapacity > 0);
         if (minimumCapacity <= Capacity) return;
         int newSize;
-        if (growStrategy == GrowStrategy.MinimalSpace)
+        if (growStrategy == GrowStrategy.ExactNumber)
         {
             newSize = CapacityHelper.GrowToExactNumber(minimumCapacity, Array.MaxLength);
         }
@@ -260,7 +259,7 @@ public partial class KeyedCollection<TKey, TItem>
         {
             InitializeToZeroCapacity(); return;
         }
-        Entry[] oldEntries = _entries;
+        Entry[]? oldEntries = _entries;
         AllocateNewBucketsAndEntries(newSize);
         if (newSize >= oldEntries.Length)
         {
@@ -384,7 +383,7 @@ public partial class KeyedCollection<TKey, TItem>
         if (Count == 0)
         {
             // The dictionary is empty. Allocate just the space required for the collection.
-            Grow(otherCount, GrowStrategy.MinimalSpace);
+            Grow(otherCount, GrowStrategy.ExactNumber);
         }
         else
         {
@@ -394,7 +393,7 @@ public partial class KeyedCollection<TKey, TItem>
     }
 
     private void AddRangeArray(TItem[] array, KeyExistsBehavior keyExistsBehavior,
-        [CallerArgumentExpression(nameof(array))] string paramName = null)
+        [CallerArgumentExpression(nameof(array))] string? paramName = null)
     {
         ArgumentNullException.ThrowIfNull(array, paramName);
         if (array.Length == 0) return; // Nothing to do
@@ -412,7 +411,7 @@ public partial class KeyedCollection<TKey, TItem>
 
     private void AddRangeEnumerable(
         IEnumerable<TItem> collection, KeyExistsBehavior keyExistsBehavior,
-        [CallerArgumentExpression(nameof(collection))] string paramName = null)
+        [CallerArgumentExpression(nameof(collection))] string? paramName = null)
     {
         ArgumentNullException.ThrowIfNull(collection, paramName);
         if (collection is TItem[] array)

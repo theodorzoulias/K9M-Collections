@@ -10,6 +10,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="KeyedCollection_Everything.cs" />
+    <Compile Include="ValueList_IList.cs" />
+    <Compile Include="ValueList_Everything.cs" />
+    <Compile Include="ValueList_Members.cs" />
+    <Compile Include="ValueList_Main.cs" />
     <Compile Include="KeyedCollection_Extensions.cs" />
     <Compile Include="KeyedCollection_Members.cs" />
     <Compile Include="Components\AssertExtensions.cs" />

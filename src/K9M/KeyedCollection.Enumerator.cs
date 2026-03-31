@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-namespace K9M;
+﻿namespace K9M;
 
 // Enumerator implementation.
 public partial class KeyedCollection<TKey, TItem>
@@ -34,15 +33,15 @@ public partial class KeyedCollection<TKey, TItem>
             {
                 if (_index == DisposedFlag) ThrowHelper.ObjectDisposedException_Enumerator(typeof(Enumerator));
                 if (_index >= 0 && _index < _entries.Length) return ref _entries[_index].Item;
-                return ref Unsafe.NullRef<TItem>();
+                return ref System.Runtime.CompilerServices.Unsafe.NullRef<TItem>();
             }
         }
 
         public partial void Dispose()
         {
             _index = DisposedFlag;
-            _parent = null;
-            _entries = null;
+            _parent = null!;
+            _entries = null!;
         }
     }
 }

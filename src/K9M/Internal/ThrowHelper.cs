@@ -44,7 +44,7 @@ internal static class ThrowHelper
         if (item is null) InvalidOperationException("The factory delegate returned a null item.");
     }
 
-    public static void ArgumentException_CollectionContainsNullItem(string paramName)
+    [DoesNotReturn] public static void ArgumentException_CollectionContainsNullItem(string? paramName)
     {
         throw new ArgumentException("The collection contains a null item.", paramName);
     }
@@ -79,5 +79,12 @@ internal static class ThrowHelper
     [DoesNotReturn] public static void ObjectDisposedException_Enumerator(Type type)
     {
         throw new ObjectDisposedException(type?.Name);
+    }
+
+    [DoesNotReturn]
+    public static void ArgumentOutOfRangeException_IndexOutOfRange(string paramName)
+    {
+        throw new ArgumentOutOfRangeException(paramName,
+            "Index was out of range. Must be non-negative and less than the size of the collection.");
     }
 }

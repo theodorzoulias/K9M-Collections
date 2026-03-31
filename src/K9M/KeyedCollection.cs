@@ -210,7 +210,7 @@ public partial class KeyedCollection<TKey, TItem> : ICollection<TItem>
     {
         ArgumentOutOfRangeException.ThrowIfNegative(capacity);
         if (capacity > Capacity)
-            Grow(capacity, GrowStrategy.MinimalSpace);
+            Grow(capacity, GrowStrategy.ExactNumber);
         return Capacity;
     }
 

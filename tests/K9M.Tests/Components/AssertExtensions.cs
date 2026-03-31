@@ -26,4 +26,13 @@ internal static class AssertExtensions
         Assert.IsTrue(exception.Message.Contains(expectedTextInsideMessage), $"Message: {exception.Message}\r\nExpected text inside message: {expectedTextInsideMessage}");
         return exception;
     }
+
+    public static ArgumentException ThrowsArgumentException(this Assert source, Action action, string expectedTextInsideMessage)
+    {
+        ArgumentNullException.ThrowIfNullOrWhiteSpace(expectedTextInsideMessage);
+        ArgumentException exception = Assert.Throws<ArgumentException>(action);
+        Assert.IsTrue(exception is not null);
+        Assert.IsTrue(exception.Message.Contains(expectedTextInsideMessage), $"Message: {exception.Message}\r\nExpected text inside message: {expectedTextInsideMessage}");
+        return exception;
+    }
 }

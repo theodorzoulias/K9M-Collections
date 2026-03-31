@@ -340,10 +340,13 @@ ASALocalRun/
 healthchecksdb
 
 apps/*
+Packages/*
+Resources/*
 src/K9M.Prototypes/*
+src/System.Collections.Generic/*
 src/K9M/_Old/*
 src/K9M/Package/*
-Resources/*
+TestResults/*
 .editorconfig
 .runsettings
 K9M.Local.slnx

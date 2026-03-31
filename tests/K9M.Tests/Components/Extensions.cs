@@ -34,6 +34,47 @@ internal static class Extensions
         }
     }
 
+    extension<T>(List<T> source)
+    {
+        public ref T GetValueRef(int index)
+        {
+            ArgumentNullException.ThrowIfNull(source);
+            return ref CollectionsMarshal.AsSpan(source)[index];
+        }
+
+        public void SetCount(int count)
+        {
+            ArgumentNullException.ThrowIfNull(source);
+            int oldCount = source.Count;
+            CollectionsMarshal.SetCount(source, count);
+            // Initialize the exposed data.
+            if (count > oldCount)
+                for (int i = oldCount; i < count; i++)
+                    source[i] = default;
+        }
+
+        public void SetCount(int count, T emptyFiller)
+        {
+            ArgumentNullException.ThrowIfNull(source);
+            int oldCount = source.Count;
+            CollectionsMarshal.SetCount(source, count);
+            if (count > oldCount)
+                for (int i = oldCount; i < count; i++)
+                    source[i] = emptyFiller;
+        }
+    }
+
+    extension<T>(IList<T> source)
+    {
+        public T GetRandom(Random random = null)
+        {
+            ArgumentNullException.ThrowIfNull(source);
+            if (source.Count == 0) throw new InvalidOperationException("The collection is empty.");
+            int randomIndex = (random ?? Random.Shared).Next(source.Count);
+            return source[randomIndex];
+        }
+    }
+
     extension<TKey, TValue>(IDictionary<TKey, TValue> source)
     {
         /// <summary>
