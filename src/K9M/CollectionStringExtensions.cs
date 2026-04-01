@@ -258,7 +258,7 @@ public static class CollectionStringExtensions
     /// or a factory delegate returned a null item,
     /// or a factory delegate produced an item with different alternate key than the original.
     /// </exception>
-    public static ref TItem AddOrReplace<TItem>(this KeyedCollection<string, TItem> source, ReadOnlySpan<char> key, Func<ReadOnlySpan<char>, TItem> addItemFactory, Func<ReadOnlySpan<char>, TItem, TItem> replaceItemFactory, out bool replaced, out TItem originalItem)
+    public static ref TItem AddOrReplace<TItem>(this KeyedCollection<string, TItem> source, ReadOnlySpan<char> key, Func<ReadOnlySpan<char>, TItem> addItemFactory, Func<ReadOnlySpan<char>, TItem, TItem> replaceItemFactory, out bool replaced, [MaybeNull] out TItem originalItem)
         where TItem : notnull
     {
         ArgumentNullException.ThrowIfNull(source);
@@ -342,7 +342,7 @@ public static class CollectionStringExtensions
     /// or a factory delegate returned a null item,
     /// or a factory delegate produced an item with different alternate key than the original.
     /// </exception>
-    public static ref TItem AddOrReplace<TItem, TArg>(this KeyedCollection<string, TItem> source, ReadOnlySpan<char> key, Func<ReadOnlySpan<char>, TArg, TItem> addItemFactory, Func<ReadOnlySpan<char>, TItem, TArg, TItem> replaceItemFactory, TArg factoryArgument, out bool replaced, out TItem originalItem)
+    public static ref TItem AddOrReplace<TItem, TArg>(this KeyedCollection<string, TItem> source, ReadOnlySpan<char> key, Func<ReadOnlySpan<char>, TArg, TItem> addItemFactory, Func<ReadOnlySpan<char>, TItem, TArg, TItem> replaceItemFactory, TArg factoryArgument, out bool replaced, [MaybeNull] out TItem originalItem)
         where TItem : notnull
     {
         ArgumentNullException.ThrowIfNull(source);
@@ -411,7 +411,7 @@ public static class CollectionStringExtensions
     /// or the factory delegate returned a null item,
     /// or the factory delegate produced an item with different alternate key than the original.
     /// </exception>
-    public static ref TItem TryReplace<TItem>(this KeyedCollection<string, TItem> source, ReadOnlySpan<char> key, Func<ReadOnlySpan<char>, TItem, TItem> replaceItemFactory, out bool replaced, out TItem originalItem)
+    public static ref TItem TryReplace<TItem>(this KeyedCollection<string, TItem> source, ReadOnlySpan<char> key, Func<ReadOnlySpan<char>, TItem, TItem> replaceItemFactory, out bool replaced, [MaybeNull] out TItem originalItem)
         where TItem : notnull
     {
         ArgumentNullException.ThrowIfNull(source);
@@ -486,7 +486,7 @@ public static class CollectionStringExtensions
     /// or the factory delegate returned a null item,
     /// or the factory delegate produced an item with different alternate key than the original.
     /// </exception>
-    public static ref TItem TryReplace<TItem, TArg>(this KeyedCollection<string, TItem> source, ReadOnlySpan<char> key, Func<ReadOnlySpan<char>, TItem, TArg, TItem> replaceItemFactory, TArg factoryArgument, out bool replaced, out TItem originalItem)
+    public static ref TItem TryReplace<TItem, TArg>(this KeyedCollection<string, TItem> source, ReadOnlySpan<char> key, Func<ReadOnlySpan<char>, TItem, TArg, TItem> replaceItemFactory, TArg factoryArgument, out bool replaced, [MaybeNull] out TItem originalItem)
         where TItem : notnull
     {
         ArgumentNullException.ThrowIfNull(source);

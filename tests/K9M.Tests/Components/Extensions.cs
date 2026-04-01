@@ -96,6 +96,11 @@ internal static class Extensions
         }
     }
 
+    extension<T>(ValueList<T> source)
+    {
+        public bool IsDefault => source == default;
+    }
+
     extension<TKey, TValue>(BCL.Dictionary<TKey, TValue> source) where TKey : notnull
     {
         public bool IsEmpty => source.Count == 0;

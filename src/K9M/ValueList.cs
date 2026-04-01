@@ -10,35 +10,39 @@ namespace K9M;
 
 public partial struct ValueList<T> : IList<T>, IReadOnlyList<T>, IEquatable<ValueList<T>>
 {
-    public partial ValueList() { }
+    // All public constructors initialize the _items to the empty array singleton.
+    public partial ValueList()
+    {
+        _items = [];
+    }
 
-    public partial ValueList(int capacity)
+    public partial ValueList(int capacity) : this()
     {
         ArgumentOutOfRangeException.ThrowIfNegative(capacity);
         if (capacity == 0) return;
         Grow(capacity, GrowStrategy.ExactNumber);
     }
 
-    public partial ValueList(IEnumerable<T> items)
+    public partial ValueList(IEnumerable<T> items) : this()
     {
         AddRange(items);
     }
 
-    public partial ValueList(T item, int count)
+    public partial ValueList(T item, int count) : this()
     {
         SetCount(count, item);
     }
 
+    // This internal constructor doesn't force the initialization of the _items.
     internal ValueList(T[]? array, int count)
     {
         ArgumentOutOfRangeException.ThrowIfNegative(count);
         ArgumentOutOfRangeException.ThrowIfGreaterThan(count, array?.Length ?? 0);
+        // Check for null first, because of the [DisallowNull] attribute on the _items.
         if (array is null) return;
         _items = array;
         _count = count;
     }
-
-    public readonly partial bool IsDefault => _items is null;
 
     public readonly partial bool IsEmpty => _count == 0;
 
@@ -212,6 +216,7 @@ public partial struct ValueList<T> : IList<T>, IReadOnlyList<T>, IEquatable<Valu
 
     public partial void Clear()
     {
+        if (_items is null) return;
         InitializeToZeroCapacity();
     }
 

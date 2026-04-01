@@ -7,7 +7,8 @@ using System.Runtime.CompilerServices;
 
 namespace K9M.Tests;
 
-public partial class ValueList_Main
+[TestClass]
+public class ValueList_Everything
 {
     [TestMethod]
     public void TestEverything()
@@ -40,6 +41,8 @@ public partial class ValueList_Main
             Randomizer.Add(SetCapacity, 10);
             Randomizer.Add(SetCount, 20);
             Randomizer.Add(ToArray, 100);
+
+            Randomizer.Add(SetDefault, 20);
         }
 
         public override void Run(int iterations)
@@ -142,6 +145,14 @@ public partial class ValueList_Main
             OperationCompleted();
         }
 
+        private void SetDefault()
+        {
+            _valueList = default;
+            _standardList.Clear();
+            AssertIdentical();
+            OperationCompleted();
+        }
+
         private void TrimExcess()
         {
             _valueList.TrimExcess();
@@ -196,4 +207,10 @@ public partial class ValueList_Main
             Assert.IsTrue(_standardList.SequenceEqual(_valueList), callerName);
         }
     }
+
+    #region Utility Methods
+
+    private void PrintTitle([CallerMemberName] string callerName = "") => UF.PrintTitle(MethodBase.GetCurrentMethod(), callerName);
+
+    #endregion
 }

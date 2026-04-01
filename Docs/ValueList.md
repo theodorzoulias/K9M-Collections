@@ -101,19 +101,33 @@ list.Add(1); // Valid
 
 The `list.Add(1)` line above is where the internal `T[]` array of the collection
 is initialized. Until this point the internal array is `null`.
-I can check whether the internal array has been instantiated with the `IsDefault` property:
+
+## How to tell if the backing array is `null` or empty?
+
+You can check at any time whether the internal array is `null` by comparing the list
+with the `default`:
 
 ```C#
 ValueList<int> list = default;
-Console.WriteLine(list.IsDefault); // Prints true
+Console.WriteLine(list == default); // Prints true
 list.Add(1);
-Console.WriteLine(list.IsDefault); // Prints false
+Console.WriteLine(list == default); // Prints false
 Console.WriteLine(list.Count); // Prints 1
 ```
 
-This initialization happens at most once. The `IsDefault` can transition from
-`true` to `false`, but never from `false` to `true`. For example the
-`Clear()` method replaces the internal array with `[]` (the empty array singleton), not with `null`.
+All public constructors return `ValueList<T>` instances backed by a non-`null` array, usually
+the empty array singleton
+[`Array.Empty<T>()`](https://learn.microsoft.com/en-us/dotnet/api/system.array.empty).
+There are two ways to get a `ValueList<T>` with `null` backing array.
+Assigning the `default`, or using the `static` factory method
+`ValueList.FromArray()` with `null` argument:
+
+- `ValueList<int> list = default;`
+- `ValueList<int> list = ValueList.FromArray<int>(null);`
+
+The backing array transitions from `null` to not-`null` when the first item is added to the
+collection. Afterwards it never transitions back to `null`. The dinstinction between
+`list == default` and `list != default` can be used reliably as state of a program.
 
 ## What if I want to store a `ValueList<T>` in the heap?
 
@@ -216,3 +230,37 @@ I haven't measured it, but I expect it to be slightly slower than the standard `
 slightly faster because the versioning is missing, depending on the usage. The performance
 is not critically important for the project that I plan to use this collection,
 so I didn't bother running a benchmark.
+
+## Any caveats?
+
+It has been said by many authors that mutable structs are evil (usually quoting
+[this](https://ericlippert.com/2008/05/14/mutating-readonly-structs/ "Mutating readonly structs")
+blog post by Eric Lippert). One way to experience this evil is by
+creating a nullable `ValueList<T>?`:
+
+```
+ValueList<int>? list = new();
+list?.Add(13);
+Console.WriteLine(list?.Count); // Prints 0!
+```
+
+The [`Nullable<T>.Value`](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1.value)
+member is a property, not a field. Every time you read this property you get a copy of the
+internal list, not the list itself. So the `list?.Add(13)` line above affected only the copy.
+The list inside the `Nullable<T>` was not mutated. But it can get worse:
+
+```
+ValueList<int>? list = new() { 1, 2, 3 };
+list?.Insert(0, 13);
+Console.WriteLine(String.Join(", ", list.Value)); // Prints 13, 1, 2
+```
+
+The value `3` disappeared! What happened is that the copy of the list and the original list
+share the same backing array. The single `Insert` call didn't cause the capacity to grow,
+because there was space for an extra item in the existing array
+(the default initial capacity is 4).
+The two lists don't share the same `_count` though. So the `_count` of the copy increased to 4,
+but the `_count` of the original remained 3.
+
+The moral lesson is, don't create nullable `ValueList<T>?`s.
+And if you have to expose a `ValueList<T>`, expose it as field, not property.

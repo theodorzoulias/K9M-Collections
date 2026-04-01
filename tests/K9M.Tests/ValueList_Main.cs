@@ -8,40 +8,8 @@ using System.Runtime.CompilerServices;
 namespace K9M.Tests;
 
 [TestClass]
-public partial class ValueList_Main
+public class ValueList_Main
 {
-    [TestMethod]
-    public void Constructors()
-    {
-        PrintTitle();
-        ValueList<int> collection;
-        var items = Enumerable.Range(1, 10);
-
-        collection = new();
-        Assertions(collection, 0, 0);
-
-        collection = new(10);
-        Assertions(collection, 0, 10);
-
-        collection = new(items);
-        Assertions(collection, items.Count(), items.Count());
-
-        collection = new(items.HideIdentity());
-        Assertions(collection, items.Count(), items.Count());
-
-        collection = new(items.ToArray());
-        Assertions(collection, items.Count(), items.Count());
-
-        static void Assertions<T>(ValueList<T> collection, int count, int capacity)
-        {
-            Assert.AreEqual(collection.Count, count);
-            if (capacity == 0)
-                Assert.AreEqual(collection.Capacity, capacity);
-            else
-                Assert.IsTrue(collection.Capacity >= capacity, $"{collection.Capacity}, {capacity}");
-        }
-    }
-
     [TestMethod]
     public void ArgumentExceptions()
     {
@@ -68,7 +36,7 @@ public partial class ValueList_Main
     public void AddRange_Capacity()
     {
         PrintTitle();
-        int[] sizes = [10, 100, 1000];
+        int[] sizes = [0, 10, 100];
         foreach (var size in sizes)
         {
             Console.WriteLine();
@@ -83,7 +51,14 @@ public partial class ValueList_Main
                 ("Using the constructor with ICollection", true, () => collection = new(items)),
                 ("Using the constructor with array", true, () => collection = new(array)),
                 ("Using the constructor with enumerable", false, () => collection = new(enumerable)),
-                ("Adding one by one", false, () => { collection = new(); foreach (var item in items) collection.Add(item); }),
+                ("AddRange on new() with ICollection", true, () => { collection = new(); collection.AddRange(items); }),
+                ("AddRange on new() with array", true, () => { collection = new(); collection.AddRange(array); }),
+                ("AddRange on new() with enumerable", false, () => { collection = new(); collection.AddRange(enumerable); }),
+                ("AddRange on default with ICollection", true, () => { collection = default; collection.AddRange(items); }),
+                ("AddRange on default with array", true, () => { collection = default; collection.AddRange(array); }),
+                ("AddRange on default with enumerable", false, () => { collection = default; collection.AddRange(enumerable); }),
+                ("Adding one by one on new()", false, () => { collection = new(); foreach (var item in items) collection.Add(item); }),
+                ("Adding one by one on default", false, () => { collection = default; foreach (var item in items) collection.Add(item); }),
             ];
             foreach (var (title, expectedTheMinimum, createDictionary) in actions)
             {
@@ -101,16 +76,16 @@ public partial class ValueList_Main
     {
         // Test that after calling Clear() and TrimExcess(), the Capacity is zero.
         PrintTitle();
-        int[] sizes = [0, 1, 10, 100, 1000];
+        int?[] sizes = [null, 0, 1, 10, 100, 1000];
         foreach (var size in sizes)
         {
-            IEnumerable<int> items = Enumerable.Range(1, size);
-            ValueList<int> collection = new(items);
+            IEnumerable<int> items = Enumerable.Range(1, size ?? 0);
+            ValueList<int> collection = size is null ? default : new(items);
             int maxCount = collection.Count;
             int maxCapacity = collection.Capacity;
             collection.Clear();
             collection.TrimExcess();
-            Console.WriteLine($"Size: {size:#,0}, Max count: {maxCount:#,0}, Max capacity: {maxCapacity:#,0}, Current capacity: {collection.Capacity:#,0}");
+            Console.WriteLine($"Size: {size?.ToString("#,0") ?? "(default)"}, Max count: {maxCount:#,0}, Max capacity: {maxCapacity:#,0}, Current capacity: {collection.Capacity:#,0}");
             Assert.AreEqual(collection.Capacity, 0);
         }
     }

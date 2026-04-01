@@ -24,4 +24,19 @@ public static class ValueList
     {
         return new ValueList<T>(array, count);
     }
+
+    /// <summary>
+    /// Creates a new ValueList&lt;T&gt; instance that is backed by the specified array.
+    /// </summary>
+    /// <typeparam name="T">The type of items in the collection.</typeparam>
+    /// <param name="array">The array to use as the backing storage of the collection.</param>
+    /// <returns>A new collection that is backed by the specified array.</returns>
+    /// <remarks>
+    /// The ownership of the array is transfered to the collection. The array
+    /// should no longer be manipulated directly by external code.
+    /// </remarks>
+    public static ValueList<T> FromArray<T>(T[]? array)
+    {
+        return new ValueList<T>(array, array?.Length ?? 0);
+    }
 }

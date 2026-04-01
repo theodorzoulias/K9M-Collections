@@ -104,6 +104,9 @@ public partial struct ValueList<T>
     /// Validation of the 'index' argument, for properties and methods with index parameter.
     /// It's not used by the Insert method, because this method has special validation rules.
     /// </summary>
+    /// <remarks>
+    /// Asserts indirectly that the _items array is not null.
+    /// </remarks>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [MemberNotNull(nameof(_items))]
     private readonly void ValidateIndexWithinRange(int index)

@@ -18,9 +18,8 @@ namespace K9M;
 public partial struct ValueList<T> : IList<T>, ICollection<T>, IEnumerable<T>, IEnumerable, IReadOnlyList<T>, IReadOnlyCollection<T>, IEquatable<ValueList<T>>
 {
     /// <summary>
-    /// Creates a new instance of the collection that is empty and uninitialized.
-    /// The collection will be initialized automatically with the default initial capacity,
-    /// when the first item is added.
+    /// Initializes a new instance of the collection that is empty,
+    /// and has the default initial capacity.
     /// </summary>
     public partial ValueList();
 
@@ -46,6 +45,7 @@ public partial struct ValueList<T> : IList<T>, ICollection<T>, IEnumerable<T>, I
     /// </summary>
     /// <param name="item">The item to be repeated.</param>
     /// <param name="count">The number of times to repeat the item in the collection.</param>
+    /// <exception cref="ArgumentOutOfRangeException">The count is negative.</exception>
     public partial ValueList(T item, int count);
 
     /// <summary>Gets a value that indicates whether the collection is empty.</summary>
@@ -55,17 +55,6 @@ public partial struct ValueList<T> : IList<T>, ICollection<T>, IEnumerable<T>, I
     /// <summary>Gets the number of items contained in the collection.</summary>
     /// <returns>The number of items in the collection.</returns>
     public readonly partial int Count { get; }
-
-    /// <summary>
-    /// Gets a value that indicates whether the collection is equal
-    /// to the default value of the type.
-    /// </summary>
-    /// <returns>true if the collection is equal to the default value of the type, otherwise false.</returns>
-    /// <remarks>
-    /// This property becomes false when the first item is added in the collection,
-    /// and then stays false for the whole lifetime of the collection.
-    /// </remarks>
-    public readonly partial bool IsDefault { get; }
 
     /// <summary>
     /// Gets the total numbers of items that can be stored in the collection without resizing.
@@ -128,6 +117,7 @@ public partial struct ValueList<T> : IList<T>, ICollection<T>, IEnumerable<T>, I
     /// </summary>
     /// <param name="match">The delegate that matches the items for removal.</param>
     /// <returns>The number of items removed from the collection.</returns>
+    /// <exception cref="ArgumentNullException">The match is null.</exception>
     public partial int RemoveWhere(Predicate<T> match);
 
     /// <summary>
@@ -136,6 +126,7 @@ public partial struct ValueList<T> : IList<T>, ICollection<T>, IEnumerable<T>, I
     /// </summary>
     /// <param name="match">The delegate that matches the items for removal.</param>
     /// <returns>The number of items removed from the collection.</returns>
+    /// <exception cref="ArgumentNullException">The match is null.</exception>
     public partial int RemoveWhere(Func<T, int, bool> match);
 
     /// <summary>
@@ -146,6 +137,7 @@ public partial struct ValueList<T> : IList<T>, ICollection<T>, IEnumerable<T>, I
     /// <param name="match">The delegate that matches the items to remove.</param>
     /// <param name="argument">The argument to pass into the delegate.</param>
     /// <returns>The number of items removed from the collection.</returns>
+    /// <exception cref="ArgumentNullException">The match is null.</exception>
     public partial int RemoveWhere<TArg>(Func<T, int, TArg, bool> match, TArg argument);
 
     /// <summary>
@@ -166,8 +158,8 @@ public partial struct ValueList<T> : IList<T>, ICollection<T>, IEnumerable<T>, I
     /// When increasing the Count, the revealed empty slots are filled
     /// with the default value of T.
     /// </remarks>
+    /// <exception cref="ArgumentOutOfRangeException">The count is negative.</exception>
     public partial void SetCount(int count);
-
 
     /// <summary>
     /// Sets the Count of the collection to the specified value.
@@ -178,6 +170,7 @@ public partial struct ValueList<T> : IList<T>, ICollection<T>, IEnumerable<T>, I
     /// When increasing the Count, the revealed empty slots are filled
     /// with the specified T value.
     /// </remarks>
+    /// <exception cref="ArgumentOutOfRangeException">The count is negative.</exception>
     public partial void SetCount(int count, T? emptyFiller);
 
     /// <summary>

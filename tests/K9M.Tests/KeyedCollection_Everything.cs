@@ -8,7 +8,8 @@ using BCL = System.Collections.Generic;
 
 namespace K9M.Tests;
 
-public partial class KeyedCollection_Main
+[TestClass]
+public class KeyedCollection_Everything
 {
     [TestMethod]
     public void TestEverything()
@@ -277,4 +278,22 @@ public partial class KeyedCollection_Main
             Assert.IsTrue(_dict.SetEquals(_collection.Select(e => KeyValuePair.Create(e.Key, e))), callerName);
         }
     }
+
+    private record struct EntityS
+    {
+        public int Key;
+        public int Value;
+
+        public EntityS(int key, int value) { Key = key; Value = value; }
+        public KeyValuePair<int, int> ToKeyValuePair() => new(Key, Value);
+        public override string ToString() => $"[{Key}, {Value}]";
+        public static EntityS Create(int key, int value) => new(key, value);
+        public static int KeySelector(EntityS entity) => entity.Key;
+    }
+
+    #region Utility Methods
+
+    private void PrintTitle([CallerMemberName] string callerName = "") => UF.PrintTitle(MethodBase.GetCurrentMethod(), callerName);
+
+    #endregion
 }

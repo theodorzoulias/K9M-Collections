@@ -216,7 +216,7 @@ public partial class KeyedCollection<TKey, TItem>
         /// or a factory delegate returned a null item,
         /// or a factory delegate produced an item with different alternate key than the original.
         /// </exception>
-        public ref TItem AddOrReplace(TAlternateKey key, Func<TAlternateKey, TItem> addItemFactory, Func<TAlternateKey, TItem, TItem> replaceItemFactory, out bool replaced, out TItem originalItem)
+        public ref TItem AddOrReplace(TAlternateKey key, Func<TAlternateKey, TItem> addItemFactory, Func<TAlternateKey, TItem, TItem> replaceItemFactory, out bool replaced, [MaybeNull] out TItem originalItem)
             => ref _parent.AddOrReplace(_keyComparer, key, addItemFactory, replaceItemFactory, out replaced, out originalItem);
 
         /// <summary>
@@ -282,7 +282,7 @@ public partial class KeyedCollection<TKey, TItem>
         /// or a factory delegate returned a null item,
         /// or a factory delegate produced an item with different alternate key than the original.
         /// </exception>
-        public ref TItem AddOrReplace<TArg>(TAlternateKey key, Func<TAlternateKey, TArg, TItem> addItemFactory, Func<TAlternateKey, TItem, TArg, TItem> replaceItemFactory, TArg factoryArgument, out bool replaced, out TItem originalItem)
+        public ref TItem AddOrReplace<TArg>(TAlternateKey key, Func<TAlternateKey, TArg, TItem> addItemFactory, Func<TAlternateKey, TItem, TArg, TItem> replaceItemFactory, TArg factoryArgument, out bool replaced, [MaybeNull] out TItem originalItem)
             => ref _parent.AddOrReplace(_keyComparer, key, addItemFactory, replaceItemFactory, factoryArgument, out replaced, out originalItem);
 
         /// <summary>
@@ -333,7 +333,7 @@ public partial class KeyedCollection<TKey, TItem>
         /// or the factory delegate returned a null item,
         /// or the factory delegate produced an item with different alternate key than the original.
         /// </exception>
-        public ref TItem TryReplace(TAlternateKey key, Func<TAlternateKey, TItem, TItem> replaceItemFactory, out bool replaced, out TItem originalItem)
+        public ref TItem TryReplace(TAlternateKey key, Func<TAlternateKey, TItem, TItem> replaceItemFactory, out bool replaced, [MaybeNull] out TItem originalItem)
             => ref _parent.TryReplace(_keyComparer, key, replaceItemFactory, out replaced, out originalItem);
 
         /// <summary>
@@ -390,7 +390,7 @@ public partial class KeyedCollection<TKey, TItem>
         /// or the factory delegate returned a null item,
         /// or the factory delegate produced an item with different alternate key than the original.
         /// </exception>
-        public ref TItem TryReplace<TArg>(TAlternateKey key, Func<TAlternateKey, TItem, TArg, TItem> replaceItemFactory, TArg factoryArgument, out bool replaced, out TItem originalItem)
+        public ref TItem TryReplace<TArg>(TAlternateKey key, Func<TAlternateKey, TItem, TArg, TItem> replaceItemFactory, TArg factoryArgument, out bool replaced, [MaybeNull] out TItem originalItem)
             => ref _parent.TryReplace(_keyComparer, key, replaceItemFactory, factoryArgument, out replaced, out originalItem);
 
         /// <summary>

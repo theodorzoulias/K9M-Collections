@@ -24,9 +24,13 @@ public partial struct ValueList<T>
         public ValueList<T> List;
 
         /// <summary>
-        /// Initializes a new box that wraps a default uninitialized ValueList&lt;T&gt; instance.
+        /// Initializes a new box that wraps a ValueList&lt;T&gt; instance created with
+        /// the parameterless constructor.
         /// </summary>
-        public Box() { }
+        public Box()
+        {
+            List = new();
+        }
 
         /// <summary>
         /// Initializes a new box that wraps the specified ValueList&lt;T&gt; instance.

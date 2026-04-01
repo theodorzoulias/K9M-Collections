@@ -71,7 +71,7 @@ public partial class KeyedCollection<TKey, TItem>
     private ref TItem AddOrReplace<TTKey>(IAlternateEqualityComparer<TTKey, TKey> comparer,
         TTKey key, Func<TTKey, TItem> addItemFactory,
         Func<TTKey, TItem, TItem> replaceItemFactory,
-        out bool replaced, out TItem originalItem) where TTKey : allows ref struct
+        out bool replaced, [MaybeNull] out TItem originalItem) where TTKey : allows ref struct
     {
         ArgumentNullException.ThrowIfNull(addItemFactory);
         ArgumentNullException.ThrowIfNull(replaceItemFactory);
@@ -99,7 +99,7 @@ public partial class KeyedCollection<TKey, TItem>
     private ref TItem AddOrReplace<TTKey, TArg>(IAlternateEqualityComparer<TTKey, TKey> comparer,
         TTKey key, Func<TTKey, TArg, TItem> addItemFactory,
         Func<TTKey, TItem, TArg, TItem> replaceItemFactory,
-        TArg factoryArgument, out bool replaced, out TItem originalItem) where TTKey : allows ref struct
+        TArg factoryArgument, out bool replaced, [MaybeNull] out TItem originalItem) where TTKey : allows ref struct
     {
         ArgumentNullException.ThrowIfNull(addItemFactory);
         ArgumentNullException.ThrowIfNull(replaceItemFactory);
@@ -126,7 +126,7 @@ public partial class KeyedCollection<TKey, TItem>
 
     private ref TItem TryReplace<TTKey>(IAlternateEqualityComparer<TTKey, TKey> comparer,
         TTKey key, Func<TTKey, TItem, TItem> replaceItemFactory,
-        out bool replaced, out TItem originalItem) where TTKey : allows ref struct
+        out bool replaced, [MaybeNull] out TItem originalItem) where TTKey : allows ref struct
     {
         ArgumentNullException.ThrowIfNull(replaceItemFactory);
         ref Entry entry = ref FindEntry(comparer, key, out _, out int bucketIndex, out int entryIndex, out _);
@@ -145,7 +145,7 @@ public partial class KeyedCollection<TKey, TItem>
 
     private ref TItem TryReplace<TTKey, TArg>(IAlternateEqualityComparer<TTKey, TKey> comparer,
         TTKey key, Func<TTKey, TItem, TArg, TItem> replaceItemFactory, TArg factoryArgument,
-        out bool replaced, out TItem originalItem) where TTKey : allows ref struct
+        out bool replaced, [MaybeNull] out TItem originalItem) where TTKey : allows ref struct
     {
         ArgumentNullException.ThrowIfNull(replaceItemFactory);
         ref Entry entry = ref FindEntry(comparer, key, out _, out int bucketIndex, out int entryIndex, out _);

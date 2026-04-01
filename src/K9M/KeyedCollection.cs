@@ -139,7 +139,7 @@ public partial class KeyedCollection<TKey, TItem> : ICollection<TItem>
     public partial ref TItem AddOrReplace(TKey key, Func<TKey, TItem> addItemFactory, Func<TKey, TItem, TItem> replaceItemFactory, out bool replaced)
         => ref AddOrReplace(_keyComparer, key, addItemFactory, replaceItemFactory, out replaced, out _);
 
-    public partial ref TItem AddOrReplace(TKey key, Func<TKey, TItem> addItemFactory, Func<TKey, TItem, TItem> replaceItemFactory, out bool replaced, out TItem originalItem)
+    public partial ref TItem AddOrReplace(TKey key, Func<TKey, TItem> addItemFactory, Func<TKey, TItem, TItem> replaceItemFactory, out bool replaced, [MaybeNull] out TItem originalItem)
         => ref AddOrReplace(_keyComparer, key, addItemFactory, replaceItemFactory, out replaced, out originalItem);
 
     public partial ref TItem AddOrReplace<TArg>(TKey key, Func<TKey, TArg, TItem> addItemFactory, Func<TKey, TItem, TArg, TItem> replaceItemFactory, TArg factoryArgument)
@@ -148,7 +148,7 @@ public partial class KeyedCollection<TKey, TItem> : ICollection<TItem>
     public partial ref TItem AddOrReplace<TArg>(TKey key, Func<TKey, TArg, TItem> addItemFactory, Func<TKey, TItem, TArg, TItem> replaceItemFactory, TArg factoryArgument, out bool replaced)
         => ref AddOrReplace(_keyComparer, key, addItemFactory, replaceItemFactory, factoryArgument, out replaced, out _);
 
-    public partial ref TItem AddOrReplace<TArg>(TKey key, Func<TKey, TArg, TItem> addItemFactory, Func<TKey, TItem, TArg, TItem> replaceItemFactory, TArg factoryArgument, out bool replaced, out TItem originalItem)
+    public partial ref TItem AddOrReplace<TArg>(TKey key, Func<TKey, TArg, TItem> addItemFactory, Func<TKey, TItem, TArg, TItem> replaceItemFactory, TArg factoryArgument, out bool replaced, [MaybeNull] out TItem originalItem)
         => ref AddOrReplace(_keyComparer, key, addItemFactory, replaceItemFactory, factoryArgument, out replaced, out originalItem);
 
     public partial bool TryReplace(TItem item)
@@ -178,7 +178,7 @@ public partial class KeyedCollection<TKey, TItem> : ICollection<TItem>
     public partial ref TItem TryReplace(TKey key, Func<TKey, TItem, TItem> replaceItemFactory, out bool replaced)
         => ref TryReplace(_keyComparer, key, replaceItemFactory, out replaced, out _);
 
-    public partial ref TItem TryReplace(TKey key, Func<TKey, TItem, TItem> replaceItemFactory, out bool replaced, out TItem originalItem)
+    public partial ref TItem TryReplace(TKey key, Func<TKey, TItem, TItem> replaceItemFactory, out bool replaced, [MaybeNull] out TItem originalItem)
         => ref TryReplace(_keyComparer, key, replaceItemFactory, out replaced, out originalItem);
 
     public partial bool TryReplace<TArg>(TKey key, Func<TKey, TItem, TArg, TItem> replaceItemFactory, TArg factoryArgument)
@@ -187,7 +187,7 @@ public partial class KeyedCollection<TKey, TItem> : ICollection<TItem>
     public partial ref TItem TryReplace<TArg>(TKey key, Func<TKey, TItem, TArg, TItem> replaceItemFactory, TArg factoryArgument, out bool replaced)
         => ref TryReplace(_keyComparer, key, replaceItemFactory, factoryArgument, out replaced, out _);
 
-    public partial ref TItem TryReplace<TArg>(TKey key, Func<TKey, TItem, TArg, TItem> replaceItemFactory, TArg factoryArgument, out bool replaced, out TItem originalItem)
+    public partial ref TItem TryReplace<TArg>(TKey key, Func<TKey, TItem, TArg, TItem> replaceItemFactory, TArg factoryArgument, out bool replaced, [MaybeNull] out TItem originalItem)
         => ref TryReplace(_keyComparer, key, replaceItemFactory, factoryArgument, out replaced, out originalItem);
 
     public partial bool TryRemove(TKey key)
