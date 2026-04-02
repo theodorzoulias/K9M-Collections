@@ -33,6 +33,34 @@ public class ValueList_Main
     }
 
     [TestMethod]
+    public void DefaultInstanceLifecycle()
+    {
+        PrintTitle();
+        ValueList<int> collection = default;
+        Assert.IsTrue(collection == default);
+        collection.AddRange([]);
+        Assert.IsTrue(collection == default);
+        collection.Clear();
+        Assert.IsTrue(collection == default);
+        collection.CopyTo([], 0);
+        Assert.IsTrue(collection == default);
+        collection.RemoveWhere(_ => true);
+        Assert.IsTrue(collection == default);
+        collection.SetCount(0);
+        Assert.IsTrue(collection == default);
+        collection.Capacity = 0;
+        Assert.IsTrue(collection == default);
+        collection.TrimExcess();
+        Assert.IsTrue(collection == default);
+        _ = collection.ToArray();
+        Assert.IsTrue(collection == default);
+        _ = collection.GetEnumerator();
+        Assert.IsTrue(collection == default);
+        collection.Add(13);
+        Assert.IsTrue(collection != default);
+    }
+
+    [TestMethod]
     public void AddRange_Capacity()
     {
         PrintTitle();

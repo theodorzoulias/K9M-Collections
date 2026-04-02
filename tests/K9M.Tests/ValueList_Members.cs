@@ -224,7 +224,7 @@ public class ValueList_Members
             Assert.AreEqual(collection.Count, 5);
             Assert.AreEqual(collection.Count(), collection.Count);
             Assert.IsTrue(collection.All(x => x % 2 != 0));
-            Console.WriteLine(String.Join("\r\n", collection));
+            Console.WriteLine(collection.ToJoinedString());
         }
         {
             VL collection = CreateCollectionX();

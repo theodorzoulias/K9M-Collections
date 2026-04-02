@@ -809,7 +809,7 @@ public class KeyedCollection_Members
                 Assert.AreEqual(item.Value, newValues[item.Key]);
             Assert.AreEqual(collection.Count, 10);
             Assert.AreEqual(collection.Count(), collection.Count);
-            Console.WriteLine(String.Join("\r\n", collection));
+            Console.WriteLine(collection.ToJoinedString());
         }
         {
             // The replaceItemFactory modifies the collection.
@@ -860,7 +860,7 @@ public class KeyedCollection_Members
             }
             Assert.AreEqual(collection.Count, 10);
             Assert.AreEqual(collection.Count(), collection.Count);
-            Console.WriteLine(String.Join("\r\n", collection));
+            Console.WriteLine(collection.ToJoinedString());
         }
         {
             // The match modifies the collection.
@@ -910,7 +910,7 @@ public class KeyedCollection_Members
             Assert.AreEqual(collection.Count, 5);
             Assert.AreEqual(collection.Count(), collection.Count);
             Assert.IsTrue(collection.All(x => x.Value % 2 != 0));
-            Console.WriteLine(String.Join("\r\n", collection));
+            Console.WriteLine(collection.ToJoinedString());
         }
         {
             // The match modifies the collection.

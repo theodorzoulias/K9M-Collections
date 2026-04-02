@@ -16,6 +16,12 @@ internal static class Extensions
 {
     extension<T>(IEnumerable<T> source)
     {
+        public string ToJoinedString(string separator = ", ")
+        {
+            if (source is null) return null;
+            return String.Join(separator, source);
+        }
+
         public IEnumerable<T> HideIdentity()
         {
             ArgumentNullException.ThrowIfNull(source);
