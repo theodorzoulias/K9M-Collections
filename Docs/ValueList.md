@@ -92,7 +92,7 @@ if (someCondition)
 The `list` is not initialized, until there is something to add in the list. The `ValueList<T>`
 is a `struct`, so it doesn't need explicit initialization. I can declare
 a `ValueList<T>` variable or field as `default`, and then immediately add things in it.
-The is no risk that my code will crash with a `NullReferenceException`:
+There is no risk that my code will crash with a `NullReferenceException`:
 
 ```C#
 ValueList<int> list = default;
