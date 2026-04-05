@@ -33,7 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\K9M\K9M.csproj" />
+    <ProjectReference Include="..\K9M\K9M.csproj" />
   </ItemGroup>
 
   <ItemGroup>

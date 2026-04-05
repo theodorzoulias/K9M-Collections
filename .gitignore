@@ -339,19 +339,19 @@ ASALocalRun/
 # BeatPulse healthcheck temp database
 healthchecksdb
 
-apps/*
-Packages/*
+_Various/*
+K9M.ConsoleTest/*
+K9M.PackageTest/*
+K9M.Prototypes/*
 Resources/*
-src/K9M.Prototypes/*
-src/System.Collections.Generic/*
-src/K9M/_Old/*
-src/K9M/Package/*
+K9M/_Old/*
+K9M/Package/*
 TestResults/*
 .editorconfig
 .runsettings
-K9M.Local.slnx
-_Notes.txt
 _CodeYard.cs
+K9M.csproj.lnk
+_Notes.txt
 _Pack.cmd
-_K9M.lnk
 _Packages.lnk
+K9M.Local.slnx

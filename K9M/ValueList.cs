@@ -38,10 +38,19 @@ public partial struct ValueList<T> : IList<T>, IReadOnlyList<T>, IEquatable<Valu
     {
         ArgumentOutOfRangeException.ThrowIfNegative(count);
         ArgumentOutOfRangeException.ThrowIfGreaterThan(count, array?.Length ?? 0);
-        // Check for null first, because of the [DisallowNull] attribute on the _items.
-        if (array is null) return;
+        //// Check for null first, because of the [DisallowNull] attribute on the _items.
+        //if (array is null) return;
         _items = array;
         _count = count;
+    }
+
+    public readonly partial bool IsDefault
+    {
+        get
+        {
+            DebugAssertions();
+            return _items is null;
+        }
     }
 
     public readonly partial bool IsEmpty => _count == 0;
@@ -212,6 +221,11 @@ public partial struct ValueList<T> : IList<T>, IReadOnlyList<T>, IEquatable<Valu
             }
         }
         return i - j;
+    }
+
+    public partial void Reset()
+    {
+        InitializeToNull();
     }
 
     public partial void Clear()

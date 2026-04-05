@@ -105,18 +105,29 @@ is initialized. Until this point the internal array is `null`.
 ## How to tell if the backing array is `null` or empty?
 
 You can check at any time whether the internal array is `null` by comparing the list
-with the `default`:
+with the `default`, or by querying the `IsDefault` property:
 
 ```C#
-ValueList<int> list = default;
+ValueList<int> list;
+list = default;
 Console.WriteLine(list == default); // Prints true
+Console.WriteLine(list.IsDefault); // Prints true
+list = [];
+Console.WriteLine(list == default); // Prints false
+Console.WriteLine(list.IsDefault); // Prints false
+list = new();
+Console.WriteLine(list == default); // Prints false
+Console.WriteLine(list.IsDefault); // Prints false
+list.Reset();
+Console.WriteLine(list == default); // Prints true
+Console.WriteLine(list.IsDefault); // Prints true
 list.Add(1);
 Console.WriteLine(list == default); // Prints false
-Console.WriteLine(list.Count); // Prints 1
+Console.WriteLine(list.IsDefault); // Prints false
 ```
 
-All public constructors return `ValueList<T>` instances backed by a non-`null` array, usually
-the empty array singleton
+All public constructors return `ValueList<T>` instances backed by a non-`null` array,
+usually the empty array singleton
 [`Array.Empty<T>()`](https://learn.microsoft.com/en-us/dotnet/api/system.array.empty).
 There are two ways to get a `ValueList<T>` with `null` backing array.
 Assigning the `default`, or using the `static` factory method
@@ -126,8 +137,8 @@ Assigning the `default`, or using the `static` factory method
 - `ValueList<int> list = ValueList.FromArray<int>(null);`
 
 The backing array transitions from `null` to not-`null` when the first item is added to the
-collection. Afterwards it never transitions back to `null`. The dinstinction between
-`list == default` and `list != default` can be used reliably as state of a program.
+collection. Afterwards it never transitions back to `null`, unless the `Reset` method
+is called. The `Reset` method explicitly empties the collection and resets the backing array to `null`.
 
 ## What if I want to store a `ValueList<T>` in the heap?
 
@@ -241,7 +252,7 @@ creating a nullable `ValueList<T>?`:
 ```
 ValueList<int>? list = new();
 list?.Add(13);
-Console.WriteLine(list?.Count); // Prints 0!
+Console.WriteLine(list?.Count); // Prints 0
 ```
 
 The [`Nullable<T>.Value`](https://learn.microsoft.com/en-us/dotnet/api/system.nullable-1.value)
@@ -255,12 +266,12 @@ list?.Insert(0, 13);
 Console.WriteLine(String.Join(", ", list.Value)); // Prints 13, 1, 2
 ```
 
-The value `3` disappeared! What happened is that the copy of the list and the original list
+The value `3` disappeared! What happened now is that the copy of the list and the original list
 share the same backing array. The single `Insert` call didn't cause the capacity to grow,
 because there was space for an extra item in the existing array
 (the default initial capacity is 4).
 The two lists don't share the same `_count` though. So the `_count` of the copy increased to 4,
-but the `_count` of the original remained 3.
+but the `_count` of the original stayed 3.
 
-The moral lesson is, don't create nullable `ValueList<T>?`s.
+The takeaway is, don't create nullable `ValueList<T>`s.
 And if you have to expose a `ValueList<T>`, expose it as field, not property.

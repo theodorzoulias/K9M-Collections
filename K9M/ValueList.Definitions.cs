@@ -48,6 +48,16 @@ public partial struct ValueList<T> : IList<T>, ICollection<T>, IEnumerable<T>, I
     /// <exception cref="ArgumentOutOfRangeException">The count is negative.</exception>
     public partial ValueList(T item, int count);
 
+    /// <summary>
+    /// Gets a value that indicates whether the collection is equal
+    /// to the default value of the type.
+    /// </summary>
+    /// <returns>true if the collection is equal to the default value of the type, otherwise false.</returns>
+    /// <remarks>
+    /// When the collection is equal to the default value of the type, the internal backing array is null.
+    /// </remarks>
+    public readonly partial bool IsDefault { get; }
+
     /// <summary>Gets a value that indicates whether the collection is empty.</summary>
     /// <returns>true if the collection contains zero items, otherwise false.</returns>
     public readonly partial bool IsEmpty { get; }
@@ -139,6 +149,15 @@ public partial struct ValueList<T> : IList<T>, ICollection<T>, IEnumerable<T>, I
     /// <returns>The number of items removed from the collection.</returns>
     /// <exception cref="ArgumentNullException">The match is null.</exception>
     public partial int RemoveWhere<TArg>(Func<T, int, TArg, bool> match, TArg argument);
+
+    /// <summary>
+    /// Removes all items from the collection, and makes the collection equal
+    /// to the default value of the type.
+    /// </summary>
+    /// <remarks>
+    /// The internal backing array becomes null.
+    /// </remarks>
+    public partial void Reset();
 
     /// <summary>
     /// Removes all items from the collection.

@@ -38,26 +38,40 @@ public class ValueList_Main
         PrintTitle();
         ValueList<int> collection = default;
         Assert.IsTrue(collection == default);
+        Assert.IsTrue(collection.IsDefault);
         collection.AddRange([]);
         Assert.IsTrue(collection == default);
+        Assert.IsTrue(collection.IsDefault);
         collection.Clear();
         Assert.IsTrue(collection == default);
+        Assert.IsTrue(collection.IsDefault);
         collection.CopyTo([], 0);
         Assert.IsTrue(collection == default);
+        Assert.IsTrue(collection.IsDefault);
         collection.RemoveWhere(_ => true);
         Assert.IsTrue(collection == default);
+        Assert.IsTrue(collection.IsDefault);
         collection.SetCount(0);
         Assert.IsTrue(collection == default);
+        Assert.IsTrue(collection.IsDefault);
         collection.Capacity = 0;
         Assert.IsTrue(collection == default);
+        Assert.IsTrue(collection.IsDefault);
         collection.TrimExcess();
         Assert.IsTrue(collection == default);
+        Assert.IsTrue(collection.IsDefault);
         _ = collection.ToArray();
         Assert.IsTrue(collection == default);
+        Assert.IsTrue(collection.IsDefault);
         _ = collection.GetEnumerator();
         Assert.IsTrue(collection == default);
+        Assert.IsTrue(collection.IsDefault);
         collection.Add(13);
-        Assert.IsTrue(collection != default);
+        Assert.IsFalse(collection == default);
+        Assert.IsFalse(collection.IsDefault);
+        collection.Reset();
+        Assert.IsTrue(collection == default);
+        Assert.IsTrue(collection.IsDefault);
     }
 
     [TestMethod]

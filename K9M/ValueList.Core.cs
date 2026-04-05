@@ -13,13 +13,19 @@ public partial struct ValueList<T>
     private const int DefaultCapacity = 4;
     private const double MinimumGrowth = 1.15;
 
-    [DisallowNull] private T[]? _items;
+    private T[]? _items;
     private int _count;
 
     [MemberNotNull(nameof(_items))]
     private void InitializeToZeroCapacity()
     {
         _items = [];
+        _count = 0;
+    }
+
+    private void InitializeToNull()
+    {
+        _items = null;
         _count = 0;
     }
 
@@ -125,12 +131,8 @@ public partial struct ValueList<T>
     {
         Debug.Assert(_count >= 0);
         if (_items is null)
-        {
             Debug.Assert(_count == 0);
-        }
         else
-        {
             Debug.Assert(_count <= _items.Length);
-        }
     }
 }
