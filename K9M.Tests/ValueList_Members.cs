@@ -234,6 +234,24 @@ public class ValueList_Members
     }
 
     [TestMethod]
+    public void Reset()
+    {
+        PrintTitle();
+        {
+            VL collection = CreateCollection3();
+            collection.Reset();
+            Assert.AreEqual(collection.Count, 0);
+            Assert.IsTrue(collection.IsDefault);
+        }
+        {
+            VL collection = CreateCollectionX();
+            collection.Reset();
+            Assert.AreEqual(collection.Count, 0);
+            Assert.IsTrue(collection.IsDefault);
+        }
+    }
+
+    [TestMethod]
     public void Clear()
     {
         PrintTitle();

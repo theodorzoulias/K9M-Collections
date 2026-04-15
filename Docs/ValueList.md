@@ -160,7 +160,7 @@ The `ValueList<T>.Box` is a reference type (a `class`), so it can be moved aroun
 
 ## Any APIs missing?
 
-Yes, there are many APIs that the `List<T>` has and the `ValueList<T>` has not.
+Yes, there are many APIs that the `List<T>` has and the `ValueList<T>` doesn't.
 Most of these APIs have been omitted because they offer functionality already available in the `Span<T>` type.
 As an example the `ValueList<T>` is not equipped with an `IndexOf()` method, but the index of a
 `T `value can be found with the

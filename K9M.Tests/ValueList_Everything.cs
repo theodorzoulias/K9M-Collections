@@ -36,6 +36,7 @@ public class ValueList_Everything
             Randomizer.Add(RemoveAt, 400);
             Randomizer.Add(RemoveWhere, 50);
 
+            Randomizer.Add(Reset, 10);
             Randomizer.Add(Clear, 10);
             Randomizer.Add(TrimExcess, 10);
             Randomizer.Add(SetCapacity, 10);
@@ -133,6 +134,14 @@ public class ValueList_Everything
         {
             _valueList.RemoveWhere(x => x % 5 == 0);
             _standardList.RemoveAll(x => x % 5 == 0);
+            AssertIdentical();
+            OperationCompleted();
+        }
+
+        private void Reset()
+        {
+            _valueList.Reset();
+            _standardList.Clear();
             AssertIdentical();
             OperationCompleted();
         }
