@@ -290,6 +290,12 @@ public partial struct ValueList<T> : IList<T>, IReadOnlyList<T>, IEquatable<Valu
         return _items.AsSpan(0, _count);
     }
 
+    public readonly partial ArraySegment<T> AsArraySegment()
+    {
+        if (_items is null) return default;
+        return new ArraySegment<T>(_items, 0, _count);
+    }
+
     public readonly partial Span<T>.Enumerator GetEnumerator()
     {
         return AsSpan().GetEnumerator();

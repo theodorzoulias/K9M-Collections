@@ -190,7 +190,6 @@ public class KeyedCollection_Everything
         private void TryRemove()
         {
             int key = GetFiftyFiftyKey();
-            int value = Random.Next();
             bool removed1 = _collection.TryRemove(key, out var value1);
             bool removed2 = _dict.Remove(key, out var value2);
             Assert.AreEqual(removed1, removed2);

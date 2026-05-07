@@ -213,11 +213,18 @@ public partial struct ValueList<T> : IList<T>, ICollection<T>, IEnumerable<T>, I
     public readonly partial T[] ToArray();
 
     /// <summary>
-    /// Gets a Span&lt;T&gt; view over the data in a collection. Items should not be added
+    /// Gets a Span&lt;T&gt; view over the data in the collection. Items should not be added
     /// or removed from the collection while the Span&lt;T&gt; is in use.
     /// </summary>
     /// <returns>A Span&lt;T&gt; instance over the collection.</returns>
     public readonly partial Span<T> AsSpan();
+
+    /// <summary>
+    /// Gets an ArraySegment&lt;T&gt; view over the data in the collection. Items should not be added
+    /// or removed from the collection while the ArraySegment&lt;T&gt; is in use.
+    /// </summary>
+    /// <returns>An ArraySegment&lt;T&gt; instance over the collection.</returns>
+    public readonly partial ArraySegment<T> AsArraySegment();
 
     /// <summary>
     /// Returns a ref struct enumerator that iterates through the collection,

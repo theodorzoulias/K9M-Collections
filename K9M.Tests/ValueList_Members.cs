@@ -375,6 +375,28 @@ public class ValueList_Members
     }
 
     [TestMethod]
+    public void AsArraySegment()
+    {
+        PrintTitle();
+        {
+            VL collection = CreateCollection3();
+            ArraySegment<int> arraySegment = collection.AsArraySegment();
+            Assert.AreEqual(arraySegment.Offset, 0);
+            Assert.AreEqual(arraySegment.Count, 3);
+            Assert.IsTrue(arraySegment.Array is not null);
+            Assert.AreEqual(arraySegment.Array.Length, collection.Capacity);
+            Assert.IsTrue(collection.SequenceEqual(arraySegment.ToArray()));
+        }
+        {
+            VL collection = CreateCollectionX();
+            ArraySegment<int> arraySegment = collection.AsArraySegment();
+            Assert.AreEqual(arraySegment.Offset, 0);
+            Assert.AreEqual(arraySegment.Count, 0);
+            Assert.IsTrue(arraySegment.Array is null);
+        }
+    }
+
+    [TestMethod]
     public void AsEnumerable()
     {
         PrintTitle();
